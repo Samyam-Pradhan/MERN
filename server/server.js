@@ -1,9 +1,8 @@
 const express = require("express");
 const app = express();
+const router = require('./router/auth-router');
 
-app.get("/", (req, res)=>{
-    res.status(200).send('Welcome to mern ');
-});
+app.use("/api/auth", router);
 
 const PORT = 5000;
 app.listen(PORT, ()=>{
