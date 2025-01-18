@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
     },
 });
 
+/* //compare password
+userSchema.methods.comparePassword = async function(password) {
+    return bcrypt.compare(password, this.password);
+} */
+
 // json web token
  userSchema.methods.generateToken = async function(){
     try {
@@ -41,6 +46,7 @@ const userSchema = new mongoose.Schema({
         console.error(error);
     }
  }
+
 
 
 //define the model or collection name
