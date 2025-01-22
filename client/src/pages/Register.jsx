@@ -1,78 +1,133 @@
 import registerImage from '../images/register-image.png';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "../components/Register.css";
-const Register = () =>{
+
+const Register = () => {
     const [user, setUser] = useState({
-        username:"",
-        email:"",
-        phone:"",
-        password:""
+        username: "",
+        email: "",
+        phone: "",
+        password: "",
     });
-//handiling input values
+const navigate = useNavigate();
+    // Handling input values
+    const handleInput = (e) => {
+        const { name, value } = e.target;
+        setUser({
+            ...user,
+            [name]: value,
+        });
+    };
 
-const handleInput = (e) =>{
-    console.log(e);
-    let name = e.target.name;
-    let value = e.target.value;
-    
-    setUser({
-        ...user,
-        [name]: value,
+    // Handling the form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(user);
+        try {
+            const response = await fetch(`http://localhost:5000/api/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(user),
+            });
 
-    })
-}
+            if(response.ok){
+                setUser({
+                    username: "",
+                    email: "",
+                    phone: "",
+                    password: "",
+                })
+                navigate("/login");
+            }
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-//handling the form submission
-
-const handleSubmit = (e) =>{
-    e.preventDefault();
-    alert(user);
-}
-    return(
-    <>
-    <section>
-        <main>
-            <div className="section-registration">
-                <div className="container grid grid-two-cols">
-                    <div className="reginstration-image">
-                        <img src={registerImage} alt="register" width="500" height="500"/>
+    return (
+        <>
+            <section>
+                <main>
+                    <div className="section-registration">
+                        <div className="container grid grid-two-cols">
+                            <div className="registration-image">
+                                <img
+                                    src={registerImage}
+                                    alt="register"
+                                    width="500"
+                                    height="500"
+                                />
+                            </div>
+                            <div className="register-form">
+                                <h1 className="main-heading mb-3">Registration Form</h1>
+                                <form onSubmit={handleSubmit}>
+                                    <div>
+                                        <label htmlFor="username">Username</label>
+                                        <input
+                                            type="text"
+                                            name="username"
+                                            placeholder="username"
+                                            id="username"
+                                            required
+                                            autoComplete="off"
+                                            value={user.username}
+                                            onChange={handleInput}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="email">Email</label>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            placeholder="email"
+                                            id="email"
+                                            required
+                                            autoComplete="off"
+                                            value={user.email}
+                                            onChange={handleInput}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="phone">Phone</label>
+                                        <input
+                                            type="text"
+                                            name="phone"
+                                            placeholder="phone"
+                                            id="phone"
+                                            required
+                                            autoComplete="off"
+                                            value={user.phone}
+                                            onChange={handleInput}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="password">Password</label>
+                                        <input
+                                            type="password"
+                                            name="password"
+                                            placeholder="password"
+                                            id="password"
+                                            required
+                                            autoComplete="off"
+                                            value={user.password}
+                                            onChange={handleInput}
+                                        />
+                                    </div>
+                                    <button type="submit" className="btn btn-submit">
+                                        Register now
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div className="register-form">
-                        <h1 class ="main-heading mb-3">registration form</h1>
-                        <br />
-                        <form onSubmit={handleSubmit}>
-                            <div>
-                                <label htmlFor="username">username</label>
-                                <input type="text" name="username" placeholder='username' id='username'
-                                required autoComplete='off'  value={user.username} onChange={handleInput} />
-                            </div>
-                            <div>
-                                <label htmlFor="email">email</label>
-                                <input type="text" name="email" placeholder='email' id='email'
-                                required autoComplete='off' value={user.email} onChange={handleInput}/>
-                            </div>
-                            <div>
-                                <label htmlFor="phone">phone</label>
-                                <input type="number" name="phone" placeholder='phone' id='phone'
-                                required autoComplete='off'  value={user.phone} onChange={handleInput}/>
-                            </div>
-                                
-                                <div>
-                                <label htmlFor="password">password</label>
-                                <input type="password" name="password" placeholder='password' id='password'
-                                required autoComplete='off'  value={user.password} onChange={handleInput}/>
-                            </div>
-                            <br />
-                            <button type='submit' className='btn btn-submit'>Register now</button>
-                            
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </section>
-    </>
-    )
-}
+                </main>
+            </section>
+        </>
+    );
+};
 
 export default Register;

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import registerImage from '../images/register-image.png';
 import "../components/login.css";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
     const [user, setUser] = useState({
         email: "",
         password: ""
     });
 
+    const navigate = useNavigate();
     const handleInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -17,9 +19,33 @@ const Login = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert(`Email: ${user.email}\nPassword: ${user.password}`);
+        /* alert(`Email: ${user.email}\nPassword: ${user.password}`); */
+        try {
+            const response = await fetch(`http://localhost:5000/api/auth/login`, {
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(user),
+            })
+            console.log("login form",response);
+            
+            if(response.ok){
+                setUser({email:"", password:""});
+                alert("Login sucessful");
+                navigate("/");
+            }
+            else{
+                alert("Invalid Credential");
+                console.log("Invalid Credential");
+                
+            }
+        } catch (error) {
+            console.log(error);
+            
+        }
     };
 
     return (
