@@ -34,6 +34,10 @@ const navigate = useNavigate();
             });
 
             if(response.ok){
+                const res_data = await response.json();
+                console.log("res from server",res_data);
+                //stored the token in local host
+                localStorage.setItem("token", res_data.token);
                 setUser({
                     username: "",
                     email: "",

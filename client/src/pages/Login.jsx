@@ -33,6 +33,11 @@ const Login = () => {
             console.log("login form",response);
             
             if(response.ok){
+                const res_data = await response.json();
+                console.log("res from server",res_data);
+                //stored the token in local host
+                localStorage.setItem("token", res_data);
+                
                 setUser({email:"", password:""});
                 alert("Login sucessful");
                 navigate("/");
