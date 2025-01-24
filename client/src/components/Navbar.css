@@ -1,8 +1,14 @@
+/* Navbar.css */
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
+
 header {
     background-color: #333;
-    color: #fff;
-    padding: 1rem 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
 }
 
 .container {
@@ -12,62 +18,58 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: white;
 }
 
-/* Logo Brand */
 .logo-brand {
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: bold;
 }
 
-.logo-brand a {
-    text-decoration: none;
-    color: #fff;
-    transition: color 0.3s;
-}
-
-.logo-brand a:hover {
-    color: #00bcd4;
-}
-
-/* Navigation */
 nav {
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-nav ul {
+nav li {
     list-style: none;
-    display: flex;
+    margin-left: 20px;
 }
 
-nav ul li {
-    margin: 0 1rem;
-}
-
-nav ul li a {
+nav a {
     text-decoration: none;
-    color: #fff;
-    font-size: 1rem;
-    transition: color 0.3s;
+    color: white;
+    font-size: 18px;
+    transition: color 0.3s ease;
 }
 
-nav ul li a:hover {
-    color: #00bcd4;
+nav a:hover {
+    color: #1e90ff;
 }
 
-/* Responsive Design */
-@media screen and (max-width: 768px) {
+nav li:first-child {
+    margin-left: 0;
+}
+
+/* Logged In and Logged Out State Styling */
+nav li {
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
     .container {
         flex-direction: column;
+        text-align: center;
     }
 
-    nav ul {
+    nav {
         flex-direction: column;
-        margin-top: 1rem;
+        margin-top: 10px;
     }
 
-    nav ul li {
-        margin: 0.5rem 0;
+    nav li {
+        margin: 10px 0;
     }
 }
+
