@@ -2,6 +2,7 @@ import { useState } from "react";
 import registerImage from '../images/register-image.png';
 import "../components/login.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../store/auth";
 const Login = () => {
     const [user, setUser] = useState({
         email: "",
@@ -9,6 +10,8 @@ const Login = () => {
     });
 
     const navigate = useNavigate();
+    const { storeTokenInLS } = useAuth();
+
     const handleInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -33,13 +36,15 @@ const Login = () => {
             console.log("login form",response);
             
             if(response.ok){
+                alert("Login sucessful");
                 const res_data = await response.json();
-                console.log("res from server",res_data);
+               
                 //stored the token in local host
-                localStorage.setItem("token", res_data);
+                storeTokenInLS(res_data.token);
+               
                 
                 setUser({email:"", password:""});
-                alert("Login sucessful");
+               
                 navigate("/");
             }
             else{

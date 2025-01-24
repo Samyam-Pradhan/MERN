@@ -1,6 +1,7 @@
 import registerImage from '../images/register-image.png';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../store/auth';
 import "../components/Register.css";
 
 const Register = () => {
@@ -10,7 +11,10 @@ const Register = () => {
         phone: "",
         password: "",
     });
+
 const navigate = useNavigate();
+const { storeTokenInLS } = useAuth();
+
     // Handling input values
     const handleInput = (e) => {
         const { name, value } = e.target;
@@ -37,7 +41,8 @@ const navigate = useNavigate();
                 const res_data = await response.json();
                 console.log("res from server",res_data);
                 //stored the token in local host
-                localStorage.setItem("token", res_data.token);
+                storeTokenInLS(res_data.token);
+               
                 setUser({
                     username: "",
                     email: "",
