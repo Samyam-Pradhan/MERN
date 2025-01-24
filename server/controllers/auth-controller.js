@@ -63,4 +63,18 @@ const login = async (req, res) =>{
     res.status(400).json({msg:"page not found"});
   }
 }
-  module.exports =  {home,register,login};
+
+//user logic to send user data
+
+const user = async (req, res) =>{
+  try {
+    const userData = req.user;
+    console.log(userData);
+    res.status(200).json({msg: userData});
+    
+  } catch (error) {
+    console.log(error);
+    
+  }
+} 
+  module.exports =  {home,register,login,user};
