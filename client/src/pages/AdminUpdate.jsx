@@ -35,18 +35,14 @@ const AdminUpdate = () => {
     }
   };
 
-  // Update state on input change
-  const handleInput = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({ ...prevData, [name]: value }));
-  };
+ 
 
   // Submit updated data
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/users/${params.id}`, {
-        method: "PUT",
+      const response = await fetch(`http://localhost:5000/api/admin/users/update/${params.id}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -68,6 +64,14 @@ const AdminUpdate = () => {
   useEffect(() => {
     getSingleUserData();
   }, [isLoggedIn, token]); // Fetch data on mount
+
+   // Update state on input change
+   const handleInput = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+
 
   return (
     <section className="section-contact">
