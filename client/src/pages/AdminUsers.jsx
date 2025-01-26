@@ -9,13 +9,13 @@ const AdminUsers = () => {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-
+    
     const getAllUsersData = async () => {
         if (!isLoggedIn) {
             navigate('/login');
             return;
         }
-
+        
         try {
             const response = await fetch("http://localhost:5000/api/admin/users", {
                 method: "GET",
@@ -23,17 +23,17 @@ const AdminUsers = () => {
                     Authorization: `Bearer ${token}`,
                 }
             });
-
+            
             if (response.status === 401) {
                 LogoutUser();
                 navigate('/login');
                 return;
             }
-
+            
             if (!response.ok) {
                 throw new Error('Failed to fetch users');
             }
-
+            
             const data = await response.json();
             setUsers(data);
             setError(null);
@@ -42,35 +42,35 @@ const AdminUsers = () => {
             setError('Unable to retrieve users');
         }
     };
+    
     //delete the user on clicking delete button
-    const deleteUser = async (id) =>{
-        try{
-        const response =await fetch(`http://localhost:5000/api/admin/users/delete/${id}`, {
-            method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${token}`,
+    const deleteUser = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/admin/users/delete/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+            const data = await response.json();
+            console.log(`users after DELETE: ${data}`);
+            
+            if (response.ok) {
+                getAllUsersData();
             }
-        });
-        const data = await response.json();
-        console.log(`users after DELETE: ${data}`);
-
-        if(response.ok){
-            getAllUsersData();
+        } catch (error) {
+            console.log(error);
         }
-    }catch(error){
-        console.log(error);
-        
-    }
-    }
-
+    };
+    
     useEffect(() => {
         getAllUsersData();
     }, [isLoggedIn, token]);
-
+    
     if (error) {
         return <div>Error: {error}</div>;
     }
-
+    
     return (
         <section className='admin-users-section'>
             <div className='container'>
@@ -99,10 +99,10 @@ const AdminUsers = () => {
                                     <td>{curUser.email}</td>
                                     <td>{curUser.phone || 'N/A'}</td>
                                     <td>
-                                        <Link to={`/admin/users/${cur.User_id}/edit`}>Edit</Link>
+                                        <Link to={`/admin/users/${curUser._id}/edit`}>Edit</Link>
                                     </td>
                                     <td>
-                                        <button onClick={()=> deleteUser(curUser._id)}>Delete</button>
+                                        <button onClick={() => deleteUser(curUser._id)}>Delete</button>
                                     </td>
                                 </tr>
                             ))

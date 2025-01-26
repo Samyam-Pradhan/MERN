@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import  Navbar  from "./components/Navbar";
 import AdminLayout from "./components/layouts/Admin-Layout";
 import AdminUsers from "./pages/AdminUsers";
+import AdminUpdate from "./pages/AdminUpdate";
 const App = () =>{
   return(
     <>
@@ -22,6 +23,7 @@ const App = () =>{
         <Route path="/login" element={<Login />} /> 
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="users" element={<AdminUsers />} />
+          <Route path="/admin/users/:id/edit" element={<AdminUpdate />} />
         </Route>
       </Routes>
     </BrowserRouter>
