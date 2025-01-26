@@ -15,6 +15,19 @@ const getAllUsers = async (req, res) => {
         return res.status(500).json({ msg: "Internal server error" });
     }
 };
+
+//single user logic
+const getUserById = async(req,res) =>{
+    try {
+        const id = req.params.id.trim();
+        const data = await User.findOne({_id: id},{password : 0});
+        return res.status(200).json(data);
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
 //delete user logic
 const deleteUserById = async(req,res) =>{
     try {
@@ -27,4 +40,6 @@ const deleteUserById = async(req,res) =>{
     }
 }
 
-module.exports = { getAllUsers,deleteUserById };
+
+
+module.exports = { getAllUsers,deleteUserById , getUserById };
