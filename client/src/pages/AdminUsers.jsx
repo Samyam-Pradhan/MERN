@@ -41,6 +41,26 @@ const AdminUsers = () => {
             setError('Unable to retrieve users');
         }
     };
+    //delete the user on clicking delete button
+    const deleteUser = async (id) =>{
+        try{
+        const response =await fetch(`http://localhost:5000/api/admin/users/delete/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        const data = await response.json();
+        console.log(`users after DELETE: ${data}`);
+
+        if(response.ok){
+            getAllUsersData();
+        }
+    }catch(error){
+        console.log(error);
+        
+    }
+    }
 
     useEffect(() => {
         getAllUsersData();
@@ -81,7 +101,7 @@ const AdminUsers = () => {
                                         <button>Edit</button>
                                     </td>
                                     <td>
-                                        <button>Delete</button>
+                                        <button onClick={()=> deleteUser(curUser._id)}>Delete</button>
                                     </td>
                                 </tr>
                             ))
