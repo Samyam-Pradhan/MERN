@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../store/auth';
 import { useNavigate } from 'react-router-dom';
 import "../components/AdminUser.css";
+import { Link } from 'react-router-dom';
 
 const AdminUsers = () => {
     const { token, isLoggedIn, LogoutUser } = useAuth();
@@ -98,7 +99,7 @@ const AdminUsers = () => {
                                     <td>{curUser.email}</td>
                                     <td>{curUser.phone || 'N/A'}</td>
                                     <td>
-                                        <button>Edit</button>
+                                        <Link to={`/admin/users/${cur.User_id}/edit`}>Edit</Link>
                                     </td>
                                     <td>
                                         <button onClick={()=> deleteUser(curUser._id)}>Delete</button>
