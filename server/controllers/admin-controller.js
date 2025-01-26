@@ -30,7 +30,7 @@ const getUserById = async(req,res) =>{
 
 // user update logic
 
-const updateUserById = async() =>{
+const updateUserById = async(req, res) =>{
     try {
         const id = req.params.id;
         const UpdatedUserData = req.body;
